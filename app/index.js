@@ -20,13 +20,24 @@ app.get('/blocks', (req, res) => {
 });
 
 
+
+
 // Post request to mine blocks
 app.post('/mine', (req, res) => {
+
+  // Add the block to the chain
   const block = bc.addBlock(req.body.data);
+
   console.log("New block created: " + block.toString());
 
+  // Send our blockchain to all sockets connected
+  p2pServer.syncChains();
+
+  // Respond shoing all the blocks in the chain
   res.redirect('/blocks');
 });
+
+
 
 // Specify in which port to listen to
 app.listen(HTTP_PORT, () => {

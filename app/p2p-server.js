@@ -48,7 +48,39 @@ class P2PServer {
   // Function to add a socket to the list of sockets
   connectSocket(socket) {
     this.sockets.push(socket);
+
+    this.messageHandler(socket);
+
+    // Send to the socket our blockchain version so they can see it
+    this.sendChain(socket);
+
     console.log("Socket Connected");
+  }
+
+
+
+  // Method to receive a message from the connection
+  messageHandler(socket) {
+    socket.on('message', message => {
+      const data = JSON.parse(message);
+      this.blockchain.replaceChain(data);
+    });
+  }
+
+
+
+  // Send to the socket our blockchain version so they can see it
+  sendChain(socket) {
+    socket.send(JSON.stringify(this.blockchain.chain));
+  }
+
+
+
+  // Send to all the sockets our blockchain version so they can see it
+  syncChains() {
+    this.sockets.forEach(socket => {
+      this.sendChain(socket);
+    });
   }
 }
 
