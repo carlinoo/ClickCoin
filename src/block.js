@@ -35,6 +35,13 @@ class Block {
   toString() {
   	return "BLOCK:\n  - Timestamp:  " + this.timestamp + "\n  - Last Hash:  " + this.lastHash.substring(0, 10) + "\n  - Hash:       " + this.hash.substring(0, 10) + "\n  - Data:       " + this.data;
   }
+
+
+  // Wrapper to generate a hash from a block
+  static blockHash(block) {
+  	const { timestamp, lastHash, data } = block;
+    return Block.hash(timestamp, lastHash, data);
+  }
 }
 
 
