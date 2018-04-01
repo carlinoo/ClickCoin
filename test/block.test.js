@@ -1,4 +1,4 @@
-const Block = require('../src/block');
+const Block = require('../blockchain/block');
 
 // Unit test for the Block class
 describe('Block', () => {

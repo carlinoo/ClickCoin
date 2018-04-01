@@ -1,5 +1,5 @@
-const Blockchain = require('../src/blockchain');
-const Block = require('../src/block');
+const Blockchain = require('../blockchain/index');
+const Block = require('../blockchain/block');
 
 
 // Unit test for Blockchain class

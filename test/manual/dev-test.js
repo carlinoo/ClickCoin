@@ -1,4 +1,4 @@
-const Block = require('../../src/block');
+const Block = require('../../blockchain/block');
 // const block = new Block();
 const firstBlock = Block.genesis();
 const secondBlock = Block.mineBlock(firstBlock, 'second');
