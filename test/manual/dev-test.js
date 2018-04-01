@@ -1,7 +1,12 @@
 const Block = require('../../src/block');
 // const block = new Block();
-const block = new Block('foo', 'bar', 'zoo', 'baz');
+const firstBlock = Block.genesis();
+const secondBlock = Block.mineBlock(firstBlock, 'second');
+const thirdBlock = Block.mineBlock(secondBlock, 'third');
+const fourthBlock = Block.mineBlock(thirdBlock, 'fourth');
 
-const fooBlock = Block.mineBlock(Block.genesis(), 'foo');
 
-console.log(fooBlock.toString());
+console.log(firstBlock.toString());
+console.log(secondBlock.toString());
+console.log(thirdBlock.toString());
+console.log(fourthBlock.toString());
