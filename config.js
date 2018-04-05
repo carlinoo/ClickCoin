@@ -1,7 +1,6 @@
-const DIFFICULTY = 3;
 
-// Mine a block every 3 seconds
-const MINE_RATE = 30000;
-
-
-module.exports = { DIFFICULTY, MINE_RATE };
+module.exports = {
+  "DIFFICULTY": 3,
+  "MINE_RATE": 10000,
+  "INITIAL_BALANCE": 500
+ };

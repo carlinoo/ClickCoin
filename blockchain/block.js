@@ -1,5 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
-const { DIFFICULTY, MINE_RATE } = require('../config');
+const CONFIG = require('../config');
 
 // Block will represent each block of the Blockchain
 class Block {
@@ -9,13 +9,13 @@ class Block {
     this.hash = hash;
     this.data = data;
     this.nonce = nonce;
-    this.difficulty = difficulty || DIFFICULTY;
+    this.difficulty = difficulty || CONFIG["DIFFICULTY"];
   }
 
 
   // Static method to generate the genesis block, which is the first one
   static genesis() {
-  	return new this('Genesis time', '-----', 'f1r57-h45h', [], 0, DIFFICULTY);
+  	return new this('Genesis time', '-----', 'f1r57-h45h', [], 0, CONFIG["DIFFICULTY"]);
   }
 
 
@@ -67,7 +67,7 @@ class Block {
     let { difficulty } = lastBlock;
 
     // If the lastBlock was created less than MINE_RATE ago, then increase difficulty, else decrease it
-    difficulty = (lastBlock.timestamp + MINE_RATE > currentTime) ? difficulty + 1 : difficulty - 1;
+    difficulty = (lastBlock.timestamp + CONFIG["MINE_RATE"] > currentTime) ? difficulty + 1 : difficulty - 1;
 
     return difficulty;
   }

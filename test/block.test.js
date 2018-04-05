@@ -1,5 +1,5 @@
 const Block = require('../blockchain/block');
-const { DIFFICULTY, MINE_RATE } = require('../config');
+const CONFIG = require('../config');
 
 // Unit test for the Block class
 describe('Block', () => {
@@ -33,14 +33,14 @@ describe('Block', () => {
 
   // It checks that the difficulty of the block is decreased as the MINE_RATE is double of what it is supposed to be
   it('lowers the difficulty for slowly mined blocks', () => {
-    expect(Block.adjustDifficulty(block, block.timestamp + MINE_RATE*2)).toEqual(block.difficulty-1);
+    expect(Block.adjustDifficulty(block, block.timestamp + CONFIG["MINE_RATE"]*2)).toEqual(block.difficulty-1);
   });
 
 
 
   // It checks that the difficulty of the block is increased as the MINE_RATE is half of what it is supposed to be
   it('lowers the difficulty for slowly mined blocks', () => {
-    expect(Block.adjustDifficulty(block, block.timestamp + MINE_RATE/2)).toEqual(block.difficulty+1);
+    expect(Block.adjustDifficulty(block, block.timestamp + CONFIG["MINE_RATE"]/2)).toEqual(block.difficulty+1);
   });
 
 
