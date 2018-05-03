@@ -1,11 +1,12 @@
 const CONFIG = require('../config');
+const ChainUtil = require('../chain-util');
 
 // This class represents the Wallet that will indicate the balance of it plus the keys
 class Wallet {
   constructor() {
     this.balance = CONFIG["INITIAL_BALANCE"];
-    this.keyPair = null;
-    this.publicKey = null;
+    this.keyPair = ChainUtil.genKeyPair();
+    this.publicKey = this.keyPair.getPublic().encode('hex');
   }
 
 
@@ -16,3 +17,7 @@ class Wallet {
 
 
 }
+
+
+
+module.exports = Wallet;
