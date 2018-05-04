@@ -5,7 +5,7 @@ class Transaction {
   constructor() {
     this.id = ChainUtil.id();
     this.input = null;
-    this.output = [];
+    this.outputs = [];
   }
 
 
