@@ -16,6 +16,12 @@ class Wallet {
   }
 
 
+  // Return a signed dataHash
+  sign(dataHash) {
+    return this.keyPair.sign(dataHash);
+  }
+
+
 }
 
 

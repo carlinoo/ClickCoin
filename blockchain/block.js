@@ -1,5 +1,5 @@
-const SHA256 = require('crypto-js/sha256');
 const CONFIG = require('../config');
+const ChainUtil = require('../chain-util');
 
 // Block will represent each block of the Blockchain
 class Block {
@@ -21,7 +21,7 @@ class Block {
 
   // Static method to generate a hash passing the timestamp, lastHash and data
   static hash(timestamp, lastHash, data, nonce, difficulty) {
-  	return SHA256(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
+  	return ChainUtil.hash(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
   }
 
 
