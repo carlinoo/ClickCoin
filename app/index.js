@@ -50,7 +50,7 @@ app.get('/transactions', (req, res) => {
 
 
 
-// Post to create a transaction with the user's wallet
+// Post request to create a transaction with the user's wallet
 app.post('/transact', (req, res) => {
   const { recipient, amount } = req.body;
   const transaction = wallet.createTransaction(recipient, amount, tp);
@@ -58,6 +58,14 @@ app.post('/transact', (req, res) => {
   // Broadcast the transaction to all sockets on the network
   p2pServer.broadcastTransaction(transaction);
   res.redirect('/transactions');
+});
+
+
+
+
+// Get request see individual's public key
+app.get('/public-key', (req, res) => {
+  res.json({ publicKey: wallet.publicKey });
 });
 
 
