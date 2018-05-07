@@ -15,6 +15,12 @@ class TransactionPool {
 			this.transactions.push(transaction);
 		}
 	}
+
+
+	// Method to return (if any) an existing transaction in the pool with the address of the passed address
+	existingTransaction(address) {
+		return this.transactions.find(t => t.input.address === address);
+	}
 }
 
 
