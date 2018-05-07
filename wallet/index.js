@@ -40,8 +40,8 @@ class Wallet {
       transaction = Transaction.newTransaction(this, recipient, amount);
       transactionPool.updateOrAddTransaction(transaction);
     }
+    return transaction;
   }
-
 
 }
 
