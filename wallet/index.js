@@ -34,6 +34,7 @@ class Wallet {
     // Get (if any) a transaction from the pool from this wallet
     let transaction = transactionPool.existingTransaction(this.publicKey);
 
+    // If exists update it. Else create it
     if (transaction) {
       transaction.update(this, recipient, amount);
     } else {

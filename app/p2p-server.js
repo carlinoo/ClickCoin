@@ -5,11 +5,17 @@ const P2P_PORT = process.env.P2P_PORT || 5001;
 // An array of all the peers on the form of "ws://localhost:5002", if there isnt any => empty array
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
+const MESSAGE_TYPES = {
+  chain: 'CHAIN',
+  transaction: 'TRANSACTION'
+};
+
 
 // This class will represent the P2P Server
 class P2PServer {
-  constructor(_blockchain) {
+  constructor(_blockchain, _transactionPool) {
     this.blockchain = _blockchain;
+    this.transactionPool = _transactionPool;
     this.sockets = [];
   }
 
@@ -63,7 +69,20 @@ class P2PServer {
   messageHandler(socket) {
     socket.on('message', message => {
       const data = JSON.parse(message);
-      this.blockchain.replaceChain(data);
+
+      // Logic if receiving a chain or transaction
+      switch (data.type) {
+        case MESSAGE_TYPES.chain: {
+          this.blockchain.replaceChain(data.chain);
+          break;
+        }
+
+        case MESSAGE_TYPES.transaction: {
+          this.transactionPool.updateOrAddTransaction(data.transaction);
+          break;
+        }
+      }
+
     });
   }
 
@@ -71,7 +90,7 @@ class P2PServer {
 
   // Send to the socket our blockchain version so they can see it
   sendChain(socket) {
-    socket.send(JSON.stringify(this.blockchain.chain));
+    socket.send(JSON.stringify({ type: MESSAGE_TYPES.chain, chain: this.blockchain.chain }));
   }
 
 
@@ -81,6 +100,20 @@ class P2PServer {
     this.sockets.forEach(socket => {
       this.sendChain(socket);
     });
+  }
+
+
+
+  // Method to broadcast a transaction to all the sockets on the nextwork
+  broadcastTransaction(transaction) {
+    this.sockets.forEach(socket => this.sendTransaction(socket, transaction));
+  }
+
+
+
+  // Method to send a transaction to a single socket
+  sendTransaction(socket, transaction) {
+    socket.send(JSON.stringify({ type: MESSAGE_TYPES.transaction, transaction: transaction }));
   }
 }
 
