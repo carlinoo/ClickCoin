@@ -47,6 +47,12 @@ class Transaction {
       signature: senderWallet.sign(ChainUtil.hash(transaction.outputs))
     }
   }
+
+
+  // Method to verify a transaction is valid
+  static verifyTransaction(transaction) {
+    return ChainUtil.verifySignature(transaction.input.address, transaction.input.signature, ChainUtil.hash(transaction.outputs));
+  }
 }
 
 
